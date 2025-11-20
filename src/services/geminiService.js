@@ -4,8 +4,8 @@
  */
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-// 使用最新的 v1 API 和 gemini-1.5-flash 模型
-const API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+// 使用稳定的 v1beta API 和 gemini-pro 模型
+const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
 /**
  * 调用 Gemini API 生成角色回复
