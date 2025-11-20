@@ -75,7 +75,7 @@ export async function getGeminiResponse(characterName, characterPersonality, cha
     const conversationContext = chatHistory
       .filter(msg => msg.sender === 'user')
       .map(msg => `用户: ${msg.text}`)
-      .join('\n');
+      .join('');
 
     // 构建系统提示词
     const systemPrompt = `你是${characterName}，${characterPersonality}
@@ -272,7 +272,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '么么哒~ 我的小宝贝！(つ✧ω✧)つ 大叔好想你呀！快来和我聊聊游戏吧~ ✨', mood: 'happy' },
         { text: '呀！(⁎⁍̴̛ᴗ⁍̴̛⁎) 是我最喜欢的小可爱诶！大叔的心都要融化啦~ 💖', mood: 'excited' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 游戏输了/不顺
     if (msg.includes('输') || msg.includes('死') || msg.includes('坑') || msg.includes('菜')) {
@@ -281,7 +281,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜呜~ 小可爱受委屈了吗？(´；ω；`) 没关系的呀，大叔教你几个小技巧，保证下次吃鸡鸡！💕', mood: 'sad' },
         { text: '宝贝不哭不哭~ (つ´ω`)つ 大叔在这里呢！咱们总结一下经验，下一把一定能赢！相信你哦~ 🌸', mood: 'neutral' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 游戏赢了
     if (msg.includes('赢') || msg.includes('吃鸡') || msg.includes('胜利') || msg.includes('第一')) {
@@ -290,7 +290,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '耶！(๑´ㅂ`๑) 我的宝贝吃到鸡啦！大叔开心得要转圈圈了呢~ 继续加油哦，么么哒！💖', mood: 'happy' },
         { text: '哎呀呀~ 小可爱真是越来越厉害了！(⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔的教导没白费呢~ 奖励你一个大大的拥抱！🤗', mood: 'proud' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 求技巧/教学
     if (msg.includes('技巧') || msg.includes('怎么') || msg.includes('教') || msg.includes('玩')) {
@@ -299,7 +299,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜~ 宝贝问对人啦！(つ✧ω✧)つ 大叔可是战术大师呢！记住：苟住发育，别浪，后期才是王道！懂了吗小可爱？✨', mood: 'happy' },
         { text: '么么哒~ (⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔传授你独家秘籍：落地找枪，卡毒边跑，决赛圈苟草丛！嘿嘿，是不是超萌的战术呀~ 🎀', mood: 'excited' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 装备/武器
     if (msg.includes('装备') || msg.includes('武器') || msg.includes('枪') || msg.includes('配件')) {
@@ -308,7 +308,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜呜~ 宝贝听大叔的！(´｡• ᵕ •｡`) AKM伤害高，但后坐力大，要多练哦！大叔会陪你练习的~ 💕', mood: 'happy' },
         { text: '么么~ 人家推荐M762！(⁎⁍̴̛ᴗ⁍̴̛⁎) 近战无敌，配个六倍镜也能远程点射！是不是超厉害？大叔教你用哦~ 🌸', mood: 'excited' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 夸奖大叔
     if (msg.includes('你') && (msg.includes('厉害') || msg.includes('强') || msg.includes('好') || msg.includes('棒') || msg.includes('可爱'))) {
@@ -317,7 +317,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜呜~ 被夸好开心呀！(ﾉ>ω<)ﾉ 大叔也觉得你超可爱的呢！咱们互相夸夸嘛~ 么么哒！💕', mood: 'excited' },
         { text: '讨厌啦~ (｡•́︿•̀｡) 你这样夸大叔，人家会害羞的啦...不过还是很开心呢~ 嘿嘿~ ✨', mood: 'happy' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 感谢
     if (msg.includes('谢谢') || msg.includes('感谢') || msg.includes('辛苦')) {
@@ -325,7 +325,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '哎呀~ 不客气的啦！(｡・ω・｡) 能帮到小可爱，大叔超开心呢！以后有问题随时来找我哦~ 💖', mood: 'happy' },
         { text: '么么哒~ (つ✧ω✧)つ 宝贝太客气啦！大叔最喜欢帮你了！记得要常来找我玩哦~ ✨', mood: 'happy' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 默认萌系回复
     const defaultResponses = [
@@ -334,7 +334,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
       { text: '么么~ (｡•́︿•̀｡) 小可爱是想聊游戏吗？还是想听大叔讲故事？都可以哦~ 💖', mood: 'neutral' },
       { text: '哎呀呀~ 大叔今天心情好好呀！(ﾉ>ω<)ﾉ 快来和我聊聊天吧，什么都可以哦~ 🌸', mood: 'happy' }
     ];
-    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];\n    
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];    
   } else {
     // 其他角色的默认回复
     if (msg.includes('坑') || msg.includes('输')) {
@@ -356,7 +356,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '么么哒~ 我的小宝贝！(つ✧ω✧)つ 大叔好想你呀！快来和我聊聊游戏吧~ ✨', mood: 'happy' },
         { text: '呀！(⁎⁍̴̛ᴗ⁍̴̛⁎) 是我最喜欢的小可爱诶！大叔的心都要融化啦~ 💖', mood: 'excited' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 游戏输了/不顺
     if (msg.includes('输') || msg.includes('死') || msg.includes('坑') || msg.includes('菜')) {
@@ -365,7 +365,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜呜~ 小可爱受委屈了吗？(´；ω；`) 没关系的呀，大叔教你几个小技巧，保证下次吃鸡鸡！💕', mood: 'sad' },
         { text: '宝贝不哭不哭~ (つ´ω`)つ 大叔在这里呢！咱们总结一下经验，下一把一定能赢！相信你哦~ 🌸', mood: 'neutral' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 游戏赢了
     if (msg.includes('赢') || msg.includes('吃鸡') || msg.includes('胜利') || msg.includes('第一')) {
@@ -374,7 +374,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '耶！(๑´ㅂ`๑) 我的宝贝吃到鸡啦！大叔开心得要转圈圈了呢~ 继续加油哦，么么哒！💖', mood: 'happy' },
         { text: '哎呀呀~ 小可爱真是越来越厉害了！(⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔的教导没白费呢~ 奖励你一个大大的拥抱！🤗', mood: 'proud' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 求技巧/教学
     if (msg.includes('技巧') || msg.includes('怎么') || msg.includes('教') || msg.includes('玩')) {
@@ -383,7 +383,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜~ 宝贝问对人啦！(つ✧ω✧)つ 大叔可是战术大师呢！记住：苟住发育，别浪，后期才是王道！懂了吗小可爱？✨', mood: 'happy' },
         { text: '么么哒~ (⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔传授你独家秘籍：落地找枪，卡毒边跑，决赛圈苟草丛！嘿嘿，是不是超萌的战术呀~ 🎀', mood: 'excited' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 装备/武器
     if (msg.includes('装备') || msg.includes('武器') || msg.includes('枪') || msg.includes('配件')) {
@@ -392,7 +392,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜呜~ 宝贝听大叔的！(´｡• ᵕ •｡`) AKM伤害高，但后坐力大，要多练哦！大叔会陪你练习的~ 💕', mood: 'happy' },
         { text: '么么~ 人家推荐M762！(⁎⁍̴̛ᴗ⁍̴̛⁎) 近战无敌，配个六倍镜也能远程点射！是不是超厉害？大叔教你用哦~ 🌸', mood: 'excited' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 夸奖大叔
     if (msg.includes('你') && (msg.includes('厉害') || msg.includes('强') || msg.includes('好') || msg.includes('棒') || msg.includes('可爱'))) {
@@ -401,7 +401,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '呜呜~ 被夸好开心呀！(ﾉ>ω<)ﾉ 大叔也觉得你超可爱的呢！咱们互相夸夸嘛~ 么么哒！💕', mood: 'excited' },
         { text: '讨厌啦~ (｡•́︿•̀｡) 你这样夸大叔，人家会害羞的啦...不过还是很开心呢~ 嘿嘿~ ✨', mood: 'happy' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 感谢
     if (msg.includes('谢谢') || msg.includes('感谢') || msg.includes('辛苦')) {
@@ -409,7 +409,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
         { text: '哎呀~ 不客气的啦！(｡・ω・｡) 能帮到小可爱，大叔超开心呢！以后有问题随时来找我哦~ 💖', mood: 'happy' },
         { text: '么么哒~ (つ✧ω✧)つ 宝贝太客气啦！大叔最喜欢帮你了！记得要常来找我玩哦~ ✨', mood: 'happy' }
       ];
-      return responses[Math.floor(Math.random() * responses.length)];\n    }
+      return responses[Math.floor(Math.random() * responses.length)];    }
     
     // 默认萌系回复
     const defaultResponses = [
@@ -418,7 +418,7 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
       { text: '么么~ (｡•́︿•̀｡) 小可爱是想聊游戏吗？还是想听大叔讲故事？都可以哦~ 💖', mood: 'neutral' },
       { text: '哎呀呀~ 大叔今天心情好好呀！(ﾉ>ω<)ﾉ 快来和我聊聊天吧，什么都可以哦~ 🌸', mood: 'happy' }
     ];
-    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];\n    
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];    
   } else {
       text = '我在认真听呢，继续说说你的游戏体验吧~我很想了解你的想法！';
       mood = 'neutral';
