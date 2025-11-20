@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, Sparkles, ChevronRight, Star, Share2, X, Mic, Zap, Save, History, Globe } from 'lucide-react';
 import { getGeminiResponse } from './services/geminiService';
 import { saveConversation, copyShareLink, generateShareText } from './services/conversationService';
+import SaveDialog from './components/SaveDialog';
+import HistoryView from './components/HistoryView';
+import PlazaView from './components/PlazaView';
 
 // --- MOCK DATA ---
 const COMPANIES = [
@@ -563,7 +566,63 @@ export default function GameSoulDemo() {
            </motion.div>
           )}
 
+          {/* 历史记录视图 */}
+          {view === 'history' && (
+            <HistoryView
+              key="history"
+              onBack={() => setView('chat')}
+              onSelectConversation={(id) => {
+                // TODO: 加载并显示对话详情
+                console.log('查看对话:', id);
+              }}
+            />
+          )}
+
+          {/* 广场视图 */}
+          {view === 'plaza' && (
+            <PlazaView
+              key="plaza"
+              onBack={() => setView('chat')}
+              onSelectConversation={(id) => {
+                // TODO: 加载并显示对话详情
+                console.log('查看对话:', id);
+              }}
+            />
+          )}
+
         </AnimatePresence>
+
+        {/* 保存对话弹窗 */}
+        <SaveDialog
+          isOpen={showSaveDialog}
+          onClose={() => setShowSaveDialog(false)}
+          onSave={handleSaveConversation}
+          isSaving={isSaving}
+        />
+
+        {/* 保存成功提示 */}
+        <AnimatePresence>
+          {saveSuccess && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2"
+            >
+              <Save size={16} />
+              <span>保存成功！</span>
+              {shareUrl && (
+                <button
+                  onClick={handleShareConversation}
+                  className="ml-2 underline hover:no-underline"
+                >
+                  复制分享链接
+                </button>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </div>
     </div>
   );
