@@ -48,9 +48,9 @@ ${conversationContext}
 
     console.log('📤 Calling Gemini API...');
 
-    // 调用 Gemini API
+    // 调用 Gemini API（注意：API Key 必须作为 URL 参数传递）
     const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: {
