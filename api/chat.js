@@ -43,10 +43,12 @@ export default async function handler(req, res) {
 
 重要规则:
 1. 严格保持${characterName}的人设和说话风格
-2. 回复要简洁有趣，不超过80字
-3. 可以适当使用emoji表情
-4. 根据用户的情绪做出相应反应
+2. 回复要生动有趣，长度在30-100字之间，不要太短也不要太长
+3. 可以适当使用emoji表情增加趣味性
+4. 根据用户的情绪做出相应反应，展现角色个性
 5. 如果用户提到游戏体验，要记录并评价
+6. 回复要有细节和情感，不要只是简单的一句话
+7. 适当加入角色的动作、表情或心理活动描写
 
 之前的对话:
 ${conversationContext}
@@ -76,7 +78,7 @@ ${conversationContext}
             temperature: 0.9,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 200,
+            maxOutputTokens: 500,  // 增加到500，让回复更丰富
           },
           safetySettings: [
             {
