@@ -50,6 +50,8 @@ ${conversationContext}
 请以${characterName}的萌系大叔口吻回复:`;
 
     console.log('📤 Calling DeepSeek API...');
+    console.log('🔑 API Key exists:', !!API_KEY);
+    console.log('🔑 API Key prefix:', API_KEY ? API_KEY.substring(0, 7) + '...' : 'N/A');
 
     // 调用 DeepSeek API
     const response = await fetch(
