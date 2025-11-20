@@ -2,21 +2,12 @@
  * Google Gemini API Service
  * 处理与 Gemini AI 的交互
  * 
- * 重要说明：
- * Gemini API 目前存在 CORS 跨域限制，无法直接在浏览器中调用
- * 这是 Google 的安全策略，不是代码问题
- * 
- * 解决方案：
- * 1. 使用模拟回复（当前方案，用户体验不受影响）
- * 2. 搭建后端代理服务器
- * 3. 使用 Vercel Serverless Functions
+ * 通过 Vercel Serverless Function 代理调用 Gemini API
+ * 解决浏览器 CORS 跨域问题
  */
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-
-// 由于 CORS 限制，浏览器无法直接调用 Gemini API
-// 我们默认使用模拟回复以提供流畅的用户体验
-const USE_MOCK_RESPONSE = true;
+// API 端点 - 使用 Vercel Serverless Function
+const API_ENDPOINT = '/api/chat';
 
 /**
  * 调用 Gemini API 生成角色回复
@@ -27,20 +18,50 @@ const USE_MOCK_RESPONSE = true;
  * @returns {Promise<{text: string, mood: string}>}
  */
 export async function getGeminiResponse(characterName, characterPersonality, chatHistory, userMessage) {
-  console.log('🤖 AI 回复生成开始...');
+  console.log('🤖 调用 Gemini AI...');
   
-  // 由于 Gemini API 的 CORS 限制，我们使用优化的模拟回复系统
-  // 这能提供更稳定和快速的用户体验
-  if (USE_MOCK_RESPONSE) {
-    console.log('💡 使用智能模拟回复系统');
-    return getEnhancedMockResponse(characterName, characterPersonality, chatHistory, userMessage);
-  }
-  
-  // 以下代码保留用于将来可能的服务器端集成
-  console.log('API_KEY:', API_KEY ? `${API_KEY.substring(0, 10)}...` : '未配置');
-  
-  if (!API_KEY || API_KEY === 'your_gemini_api_key_here') {
-    console.log('⚠️ API Key 未配置，使用模拟回复');
+  try {
+    // 调用 Vercel Serverless Function
+    console.log('📤 发送请求到 API 代理...');
+    
+    const response = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        characterName,
+        characterPersonality,
+        chatHistory,
+        userMessage
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    // 如果 API 建议使用模拟回复（API Key 未配置或出错）
+    if (data.useMock) {
+      console.log('⚠️ API 不可用，使用模拟回复');
+      return getEnhancedMockResponse(characterName, characterPersonality, chatHistory, userMessage);
+    }
+    
+    console.log('✅ Gemini AI 回复成功:', data.text);
+    console.log('📊 数据来源:', data.source);
+    
+    return {
+      text: data.text,
+      mood: data.mood || 'neutral'
+    };
+
+  } catch (error) {
+    console.error('❌ API 调用失败:', error);
+    console.log('💡 降级使用模拟回复');
+    
+    // 出错时降级使用模拟回复
     return getEnhancedMockResponse(characterName, characterPersonality, chatHistory, userMessage);
   }
 

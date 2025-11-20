@@ -1,0 +1,137 @@
+/**
+ * Vercel Serverless Function - Gemini API 代理
+ * 解决浏览器 CORS 跨域问题
+ */
+
+export default async function handler(req, res) {
+  // 只允许 POST 请求
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const { characterName, characterPersonality, chatHistory, userMessage } = req.body;
+
+    // 获取 API Key（从环境变量）
+    const API_KEY = process.env.GEMINI_API_KEY;
+    
+    if (!API_KEY) {
+      console.error('Gemini API Key not configured');
+      return res.status(500).json({ 
+        error: 'API Key not configured',
+        useMock: true 
+      });
+    }
+
+    // 构建对话上下文
+    const conversationContext = chatHistory
+      .filter(msg => msg.sender === 'user')
+      .map(msg => `用户: ${msg.text}`)
+      .join('\n');
+
+    // 构建提示词
+    const systemPrompt = `你是${characterName}，${characterPersonality}
+
+重要规则:
+1. 严格保持${characterName}的人设和说话风格
+2. 回复要简洁有趣，不超过80字
+3. 可以适当使用emoji表情
+4. 根据用户的情绪做出相应反应
+5. 如果用户提到游戏体验，要记录并评价
+
+之前的对话:
+${conversationContext}
+
+现在用户说: ${userMessage}
+
+请以${characterName}的口吻回复(只返回回复内容，不要加"${characterName}:"等前缀):`;
+
+    console.log('📤 Calling Gemini API...');
+
+    // 调用 Gemini API
+    const response = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: systemPrompt
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.9,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 200,
+          },
+          safetySettings: [
+            {
+              category: "HARM_CATEGORY_HARASSMENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              category: "HARM_CATEGORY_HATE_SPEECH",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            }
+          ]
+        })
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Gemini API Error:', response.status, errorText);
+      
+      return res.status(response.status).json({ 
+        error: `Gemini API error: ${response.status}`,
+        details: errorText,
+        useMock: true 
+      });
+    }
+
+    const data = await response.json();
+    console.log('✅ Gemini API Success');
+
+    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || '我现在有点累了，待会再聊...';
+
+    // 简单的情绪分析
+    const mood = analyzeMood(userMessage, aiText);
+
+    return res.status(200).json({
+      text: aiText,
+      mood: mood,
+      source: 'gemini-api'
+    });
+
+  } catch (error) {
+    console.error('Server Error:', error);
+    
+    return res.status(500).json({ 
+      error: error.message,
+      useMock: true 
+    });
+  }
+}
+
+/**
+ * 简单的情绪分析
+ */
+function analyzeMood(userMessage, aiResponse) {
+  const happyKeywords = ['好', '棒', '赢', '爽', '厉害', '强', '牛'];
+  const sadKeywords = ['坑', '垃圾', '输', '烂', '差', '菜', '难'];
+  const angryKeywords = ['气', '怒', '骂', '烦', '讨厌'];
+  const excitedKeywords = ['哈哈', '笑', '有趣', '好玩'];
+
+  const text = userMessage + aiResponse;
+
+  if (sadKeywords.some(kw => text.includes(kw))) return 'sad';
+  if (angryKeywords.some(kw => text.includes(kw))) return 'angry';
+  if (excitedKeywords.some(kw => text.includes(kw))) return 'excited';
+  if (happyKeywords.some(kw => text.includes(kw))) return 'happy';
+
+  return 'neutral';
+}
