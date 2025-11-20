@@ -15,10 +15,17 @@ export default async function handler(req, res) {
     // 获取 API Key（从环境变量）
     const API_KEY = process.env.GEMINI_API_KEY;
     
+    // 详细诊断日志
+    console.log('=== API Key 诊断 ===');
+    console.log('API_KEY exists:', !!API_KEY);
+    console.log('API_KEY length:', API_KEY ? API_KEY.length : 0);
+    console.log('API_KEY preview:', API_KEY ? `${API_KEY.substring(0, 10)}...` : 'undefined');
+    
     if (!API_KEY) {
-      console.error('Gemini API Key not configured');
+      console.error('❌ Gemini API Key not configured');
       return res.status(500).json({ 
         error: 'API Key not configured',
+        debug: 'Environment variable GEMINI_API_KEY is missing',
         useMock: true 
       });
     }
@@ -47,6 +54,7 @@ ${conversationContext}
 请以${characterName}的口吻回复(只返回回复内容，不要加"${characterName}:"等前缀):`;
 
     console.log('📤 Calling Gemini API...');
+    console.log('API URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY.substring(0, 10)}...`);
 
     // 调用 Gemini API（注意：API Key 必须作为 URL 参数传递）
     const response = await fetch(
@@ -82,13 +90,18 @@ ${conversationContext}
       }
     );
 
+    console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
+
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Gemini API Error:', response.status, errorText);
+      console.error('❌ Gemini API Error:', response.status, errorText);
       
-      return res.status(response.status).json({ 
+      return res.status(200).json({ 
         error: `Gemini API error: ${response.status}`,
         details: errorText,
+        apiKeyConfigured: true,
+        responseStatus: response.status,
         useMock: true 
       });
     }
@@ -108,10 +121,13 @@ ${conversationContext}
     });
 
   } catch (error) {
-    console.error('Server Error:', error);
+    console.error('❌ Server Error:', error);
+    console.error('Error stack:', error.stack);
     
-    return res.status(500).json({ 
+    return res.status(200).json({ 
       error: error.message,
+      errorType: error.name,
+      stack: error.stack,
       useMock: true 
     });
   }
