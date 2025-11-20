@@ -31,10 +31,14 @@ const COMPANIES = [
         coverColor: 'from-slate-700 to-slate-900',
         character: {
           name: '光子鸡',
-          role: '战术向导',
-          avatarColor: 'bg-yellow-400',
-          greeting: '大吉大利,今晚吃鸡!特种兵,请汇报你的战况!',
-          style: 'military'
+          role: '萌系战术大叔 / 温柔向导',
+          avatarColor: 'bg-pink-400',
+          avatar: '🐥',
+          avatarImage: '/pubg-character.png', // 用户上传的图片
+          greeting: '哎呀呀~小可爱来啦！(｡・ω・｡) 大叔今天心情超好呢！要不要听听我的吃鸡秘籍？保证让你萌萌哒地吃到鸡哦~ ✨',
+          personality: '萌系大叔，说话温柔可爱，经常使用颜文字和emoji。虽然外表威猛但内心柔软，喜欢用"哎呀呀"、"小可爱"等可爱的称呼。战术建议专业但表达方式超萌，偶尔会害羞地说"人家也不知道啦~"。热爱分享游戏心得，对玩家充满耐心和关爱。',
+          style: 'cute-uncle',
+          modelProvider: 'deepseek'  // 使用DeepSeek模型
         }
       }
     ]
@@ -131,12 +135,14 @@ export default function GameSoulDemo() {
     }
 
     try {
-      // 调用 Gemini API
+      // 调用 AI API（根据角色选择不同的模型）
+      const modelProvider = selectedGame.character.modelProvider || 'gemini';
       const { text: aiResponseText, mood } = await getGeminiResponse(
         selectedGame.character.name,
         selectedGame.character.personality,
         chatHistory,
-        currentInput
+        currentInput,
+        modelProvider
       );
 
       setChatHistory(prev => [...prev, {

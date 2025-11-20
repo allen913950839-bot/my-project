@@ -1,24 +1,29 @@
 /**
- * Google Gemini API Service
- * 处理与 Gemini AI 的交互
+ * AI API Service
+ * 处理与 AI 的交互（Gemini / DeepSeek）
  * 
- * 通过 Vercel Serverless Function 代理调用 Gemini API
+ * 通过 Vercel Serverless Function 代理调用 AI API
  * 解决浏览器 CORS 跨域问题
  */
 
-// API 端点 - 使用 Vercel Serverless Function
-const API_ENDPOINT = '/api/chat';
+// API 端点
+const GEMINI_ENDPOINT = '/api/chat';
+const DEEPSEEK_ENDPOINT = '/api/deepseek';
 
 /**
- * 调用 Gemini API 生成角色回复
+ * 调用 AI API 生成角色回复
  * @param {string} characterName - 角色名称
  * @param {string} characterPersonality - 角色性格设定
  * @param {Array} chatHistory - 对话历史
  * @param {string} userMessage - 用户消息
+ * @param {string} modelProvider - 模型提供商 ('gemini' | 'deepseek')
  * @returns {Promise<{text: string, mood: string}>}
  */
-export async function getGeminiResponse(characterName, characterPersonality, chatHistory, userMessage) {
-  console.log('🤖 调用 Gemini AI...');
+export async function getGeminiResponse(characterName, characterPersonality, chatHistory, userMessage, modelProvider = 'gemini') {
+  console.log(`🤖 调用 ${modelProvider.toUpperCase()} AI...`);
+  
+  // 根据模型提供商选择端点
+  const API_ENDPOINT = modelProvider === 'deepseek' ? DEEPSEEK_ENDPOINT : GEMINI_ENDPOINT;
   
   try {
     // 调用 Vercel Serverless Function
@@ -46,7 +51,7 @@ export async function getGeminiResponse(characterName, characterPersonality, cha
     // 如果 API 建议使用模拟回复（API Key 未配置或出错）
     if (data.useMock) {
       console.log('⚠️ API 不可用，使用模拟回复');
-      return getEnhancedMockResponse(characterName, characterPersonality, chatHistory, userMessage);
+      return getEnhancedMockResponse(characterName, characterPersonality, chatHistory, userMessage, modelProvider);
     }
     
     console.log('✅ Gemini AI 回复成功:', data.text);
@@ -257,6 +262,79 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
     ];
     return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
     
+  } else if (characterName === '光子鸡') {
+    // 光子鸡：萌系大叔的回复逻辑
+    
+    // 问候相关
+    if (msg.includes('你好') || msg.includes('hi') || msg.includes('hello')) {
+      const responses = [
+        { text: '哎呀呀~ 小可爱来啦！(｡・ω・｡) 大叔今天超开心呢！要不要听听吃鸡秘籍？💕', mood: 'happy' },
+        { text: '么么哒~ 我的小宝贝！(つ✧ω✧)つ 大叔好想你呀！快来和我聊聊游戏吧~ ✨', mood: 'happy' },
+        { text: '呀！(⁎⁍̴̛ᴗ⁍̴̛⁎) 是我最喜欢的小可爱诶！大叔的心都要融化啦~ 💖', mood: 'excited' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 游戏输了/不顺
+    if (msg.includes('输') || msg.includes('死') || msg.includes('坑') || msg.includes('菜')) {
+      const responses = [
+        { text: '哎呀呀~ 宝贝别难过嘛(｡•́︿•̀｡) 大叔抱抱你！输一把没关系的啦，咱们下次一定能吃到鸡！加油哦~ 💪✨', mood: 'sad' },
+        { text: '呜呜~ 小可爱受委屈了吗？(´；ω；`) 没关系的呀，大叔教你几个小技巧，保证下次吃鸡鸡！💕', mood: 'sad' },
+        { text: '宝贝不哭不哭~ (つ´ω`)つ 大叔在这里呢！咱们总结一下经验，下一把一定能赢！相信你哦~ 🌸', mood: 'neutral' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 游戏赢了
+    if (msg.includes('赢') || msg.includes('吃鸡') || msg.includes('胜利') || msg.includes('第一')) {
+      const responses = [
+        { text: '哇哦哦哦！！！小可爱太棒啦！(ﾉ>ω<)ﾉ 大叔为你骄傲呢！来来来，让大叔亲一个~ mua~ 💋✨', mood: 'excited' },
+        { text: '耶！(๑´ㅂ`๑) 我的宝贝吃到鸡啦！大叔开心得要转圈圈了呢~ 继续加油哦，么么哒！💖', mood: 'happy' },
+        { text: '哎呀呀~ 小可爱真是越来越厉害了！(⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔的教导没白费呢~ 奖励你一个大大的拥抱！🤗', mood: 'proud' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 求技巧/教学
+    if (msg.includes('技巧') || msg.includes('怎么') || msg.includes('教') || msg.includes('玩')) {
+      const responses = [
+        { text: '哎呀~ 小可爱想学技巧呀？(｡・ω・｡) 大叔最喜欢教人啦！首先要学会听脚步声哦，然后卡掩体，瞄准要稳~ 人家慢慢教你啦~ 💕', mood: 'neutral' },
+        { text: '呜~ 宝贝问对人啦！(つ✧ω✧)つ 大叔可是战术大师呢！记住：苟住发育，别浪，后期才是王道！懂了吗小可爱？✨', mood: 'happy' },
+        { text: '么么哒~ (⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔传授你独家秘籍：落地找枪，卡毒边跑，决赛圈苟草丛！嘿嘿，是不是超萌的战术呀~ 🎀', mood: 'excited' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 装备/武器
+    if (msg.includes('装备') || msg.includes('武器') || msg.includes('枪') || msg.includes('配件')) {
+      const responses = [
+        { text: '哎呀呀~ 小可爱问装备呀？(｡・ω・｡) M416配红点超好用的！再加个垂直握把，简直完美！大叔最喜欢这个搭配啦~ ✨', mood: 'neutral' },
+        { text: '呜呜~ 宝贝听大叔的！(´｡• ᵕ •｡`) AKM伤害高，但后坐力大，要多练哦！大叔会陪你练习的~ 💕', mood: 'happy' },
+        { text: '么么~ 人家推荐M762！(⁎⁍̴̛ᴗ⁍̴̛⁎) 近战无敌，配个六倍镜也能远程点射！是不是超厉害？大叔教你用哦~ 🌸', mood: 'excited' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 夸奖大叔
+    if (msg.includes('你') && (msg.includes('厉害') || msg.includes('强') || msg.includes('好') || msg.includes('棒') || msg.includes('可爱'))) {
+      const responses = [
+        { text: '哎呀呀~ 小可爱夸大叔啦！(*/ω＼*) 人家...人家都不好意思了啦~ 脸红红~ 💗', mood: 'happy' },
+        { text: '呜呜~ 被夸好开心呀！(ﾉ>ω<)ﾉ 大叔也觉得你超可爱的呢！咱们互相夸夸嘛~ 么么哒！💕', mood: 'excited' },
+        { text: '讨厌啦~ (｡•́︿•̀｡) 你这样夸大叔，人家会害羞的啦...不过还是很开心呢~ 嘿嘿~ ✨', mood: 'happy' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 感谢
+    if (msg.includes('谢谢') || msg.includes('感谢') || msg.includes('辛苦')) {
+      const responses = [
+        { text: '哎呀~ 不客气的啦！(｡・ω・｡) 能帮到小可爱，大叔超开心呢！以后有问题随时来找我哦~ 💖', mood: 'happy' },
+        { text: '么么哒~ (つ✧ω✧)つ 宝贝太客气啦！大叔最喜欢帮你了！记得要常来找我玩哦~ ✨', mood: 'happy' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 默认萌系回复
+    const defaultResponses = [
+      { text: '哎呀呀~ 小可爱在说什么呀？(｡・ω・｡) 大叔没听太懂呢~ 能再说详细一点吗？💕', mood: 'neutral' },
+      { text: '呜~ (⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔在认真听哦！宝贝继续说嘛，我超想听的！✨', mood: 'neutral' },
+      { text: '么么~ (｡•́︿•̀｡) 小可爱是想聊游戏吗？还是想听大叔讲故事？都可以哦~ 💖', mood: 'neutral' },
+      { text: '哎呀呀~ 大叔今天心情好好呀！(ﾉ>ω<)ﾉ 快来和我聊聊天吧，什么都可以哦~ 🌸', mood: 'happy' }
+    ];
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];\n    
   } else {
     // 其他角色的默认回复
     if (msg.includes('坑') || msg.includes('输')) {
@@ -268,7 +346,80 @@ function getEnhancedMockResponse(characterName, characterPersonality, chatHistor
     } else if (msg.includes('抽')) {
       text = '咦？你在说什么呀？我听不太懂呢~😊';
       mood = 'neutral';
-    } else {
+    } else if (characterName === '光子鸡') {
+    // 光子鸡：萌系大叔的回复逻辑
+    
+    // 问候相关
+    if (msg.includes('你好') || msg.includes('hi') || msg.includes('hello')) {
+      const responses = [
+        { text: '哎呀呀~ 小可爱来啦！(｡・ω・｡) 大叔今天超开心呢！要不要听听吃鸡秘籍？💕', mood: 'happy' },
+        { text: '么么哒~ 我的小宝贝！(つ✧ω✧)つ 大叔好想你呀！快来和我聊聊游戏吧~ ✨', mood: 'happy' },
+        { text: '呀！(⁎⁍̴̛ᴗ⁍̴̛⁎) 是我最喜欢的小可爱诶！大叔的心都要融化啦~ 💖', mood: 'excited' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 游戏输了/不顺
+    if (msg.includes('输') || msg.includes('死') || msg.includes('坑') || msg.includes('菜')) {
+      const responses = [
+        { text: '哎呀呀~ 宝贝别难过嘛(｡•́︿•̀｡) 大叔抱抱你！输一把没关系的啦，咱们下次一定能吃到鸡！加油哦~ 💪✨', mood: 'sad' },
+        { text: '呜呜~ 小可爱受委屈了吗？(´；ω；`) 没关系的呀，大叔教你几个小技巧，保证下次吃鸡鸡！💕', mood: 'sad' },
+        { text: '宝贝不哭不哭~ (つ´ω`)つ 大叔在这里呢！咱们总结一下经验，下一把一定能赢！相信你哦~ 🌸', mood: 'neutral' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 游戏赢了
+    if (msg.includes('赢') || msg.includes('吃鸡') || msg.includes('胜利') || msg.includes('第一')) {
+      const responses = [
+        { text: '哇哦哦哦！！！小可爱太棒啦！(ﾉ>ω<)ﾉ 大叔为你骄傲呢！来来来，让大叔亲一个~ mua~ 💋✨', mood: 'excited' },
+        { text: '耶！(๑´ㅂ`๑) 我的宝贝吃到鸡啦！大叔开心得要转圈圈了呢~ 继续加油哦，么么哒！💖', mood: 'happy' },
+        { text: '哎呀呀~ 小可爱真是越来越厉害了！(⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔的教导没白费呢~ 奖励你一个大大的拥抱！🤗', mood: 'proud' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 求技巧/教学
+    if (msg.includes('技巧') || msg.includes('怎么') || msg.includes('教') || msg.includes('玩')) {
+      const responses = [
+        { text: '哎呀~ 小可爱想学技巧呀？(｡・ω・｡) 大叔最喜欢教人啦！首先要学会听脚步声哦，然后卡掩体，瞄准要稳~ 人家慢慢教你啦~ 💕', mood: 'neutral' },
+        { text: '呜~ 宝贝问对人啦！(つ✧ω✧)つ 大叔可是战术大师呢！记住：苟住发育，别浪，后期才是王道！懂了吗小可爱？✨', mood: 'happy' },
+        { text: '么么哒~ (⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔传授你独家秘籍：落地找枪，卡毒边跑，决赛圈苟草丛！嘿嘿，是不是超萌的战术呀~ 🎀', mood: 'excited' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 装备/武器
+    if (msg.includes('装备') || msg.includes('武器') || msg.includes('枪') || msg.includes('配件')) {
+      const responses = [
+        { text: '哎呀呀~ 小可爱问装备呀？(｡・ω・｡) M416配红点超好用的！再加个垂直握把，简直完美！大叔最喜欢这个搭配啦~ ✨', mood: 'neutral' },
+        { text: '呜呜~ 宝贝听大叔的！(´｡• ᵕ •｡`) AKM伤害高，但后坐力大，要多练哦！大叔会陪你练习的~ 💕', mood: 'happy' },
+        { text: '么么~ 人家推荐M762！(⁎⁍̴̛ᴗ⁍̴̛⁎) 近战无敌，配个六倍镜也能远程点射！是不是超厉害？大叔教你用哦~ 🌸', mood: 'excited' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 夸奖大叔
+    if (msg.includes('你') && (msg.includes('厉害') || msg.includes('强') || msg.includes('好') || msg.includes('棒') || msg.includes('可爱'))) {
+      const responses = [
+        { text: '哎呀呀~ 小可爱夸大叔啦！(*/ω＼*) 人家...人家都不好意思了啦~ 脸红红~ 💗', mood: 'happy' },
+        { text: '呜呜~ 被夸好开心呀！(ﾉ>ω<)ﾉ 大叔也觉得你超可爱的呢！咱们互相夸夸嘛~ 么么哒！💕', mood: 'excited' },
+        { text: '讨厌啦~ (｡•́︿•̀｡) 你这样夸大叔，人家会害羞的啦...不过还是很开心呢~ 嘿嘿~ ✨', mood: 'happy' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 感谢
+    if (msg.includes('谢谢') || msg.includes('感谢') || msg.includes('辛苦')) {
+      const responses = [
+        { text: '哎呀~ 不客气的啦！(｡・ω・｡) 能帮到小可爱，大叔超开心呢！以后有问题随时来找我哦~ 💖', mood: 'happy' },
+        { text: '么么哒~ (つ✧ω✧)つ 宝贝太客气啦！大叔最喜欢帮你了！记得要常来找我玩哦~ ✨', mood: 'happy' }
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];\n    }
+    
+    // 默认萌系回复
+    const defaultResponses = [
+      { text: '哎呀呀~ 小可爱在说什么呀？(｡・ω・｡) 大叔没听太懂呢~ 能再说详细一点吗？💕', mood: 'neutral' },
+      { text: '呜~ (⁎⁍̴̛ᴗ⁍̴̛⁎) 大叔在认真听哦！宝贝继续说嘛，我超想听的！✨', mood: 'neutral' },
+      { text: '么么~ (｡•́︿•̀｡) 小可爱是想聊游戏吗？还是想听大叔讲故事？都可以哦~ 💖', mood: 'neutral' },
+      { text: '哎呀呀~ 大叔今天心情好好呀！(ﾉ>ω<)ﾉ 快来和我聊聊天吧，什么都可以哦~ 🌸', mood: 'happy' }
+    ];
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];\n    
+  } else {
       text = '我在认真听呢，继续说说你的游戏体验吧~我很想了解你的想法！';
       mood = 'neutral';
     }
