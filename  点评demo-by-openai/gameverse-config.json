@@ -1,0 +1,719 @@
+{
+  "project": {
+    "name": "GameVerse",
+    "version": "1.0.0",
+    "type": "web-h5",
+    "description": "AI驱动的沉浸式游戏点评社区",
+    "repository": "https://github.com/gameverse/gameverse-web",
+    "license": "MIT"
+  },
+  "publishers": [
+    {
+      "id": "epic-games",
+      "name": "Epic Games",
+      "avatar": {
+        "character_name": "Epic",
+        "title": "史诗守护者",
+        "emoji": "⚔️",
+        "image_url": "/assets/characters/epic.png",
+        "model_3d": "/assets/characters/epic.glb",
+        "animation_idle": "/assets/animations/epic-idle.mp4"
+      },
+      "personality": {
+        "traits": ["冒险", "大气", "技术控"],
+        "greeting": "欢迎来到史诗世界！准备好开启冒险了吗？",
+        "tone": "激昂、充满能量",
+        "keywords": ["冒险", "创新", "突破"]
+      },
+      "games": [
+        {
+          "id": "fortnite",
+          "name": "Fortnite",
+          "name_cn": "堡垒之夜",
+          "icon": "🏰",
+          "character": {
+            "name": "Fortuna",
+            "title": "战场主播",
+            "emoji": "👧",
+            "image_url": "/assets/characters/fortuna.png",
+            "personality": "活力、潮流、建筑狂热",
+            "catchphrase": "又是一场精彩的胜利！给你的建筑技巧打10分！",
+            "voice_sample": "/assets/voices/fortuna-greeting.mp3"
+          },
+          "rating": 4.7,
+          "reviews_count": 12847,
+          "genres": ["射击", "生存", "建造"],
+          "platforms": ["PC", "PS5", "Xbox", "Switch", "移动端"],
+          "release_date": "2017-07-25",
+          "ai_recommendation": "建筑与射击的完美融合！这款游戏适合喜欢创造性战斗的你！"
+        },
+        {
+          "id": "rocket-league",
+          "name": "Rocket League",
+          "name_cn": "火箭联盟",
+          "icon": "🚗",
+          "character": {
+            "name": "Turbo",
+            "title": "机械飞车手",
+            "emoji": "🤖",
+            "image_url": "/assets/characters/turbo.png",
+            "personality": "速度狂、机械美学、竞技精神",
+            "catchphrase": "这个空中射门太帅了！要不要挑战一下我的记录？",
+            "voice_sample": "/assets/voices/turbo-greeting.mp3"
+          },
+          "rating": 4.5,
+          "reviews_count": 8934,
+          "genres": ["体育", "竞速", "竞技"],
+          "platforms": ["PC", "PS5", "Xbox", "Switch"],
+          "release_date": "2015-07-07",
+          "ai_recommendation": "速度与激情的完美碰撞！要不要来一场空中射门挑战？"
+        }
+      ]
+    },
+    {
+      "id": "mihoyo",
+      "name": "miHoYo",
+      "name_cn": "米哈游",
+      "avatar": {
+        "character_name": "Paimon Plus",
+        "title": "旅行诗人",
+        "emoji": "✨",
+        "image_url": "/assets/characters/paimon-plus.png",
+        "model_3d": "/assets/characters/paimon-plus.glb"
+      },
+      "personality": {
+        "traits": ["二次元", "温暖", "博学"],
+        "greeting": "每个世界都有它的故事，让我们一起探索吧~",
+        "tone": "温柔、充满想象力",
+        "keywords": ["幻想", "探索", "故事"]
+      },
+      "games": [
+        {
+          "id": "genshin-impact",
+          "name": "Genshin Impact",
+          "name_cn": "原神",
+          "icon": "⚡",
+          "character": {
+            "name": "Venti Echo",
+            "title": "提瓦特向导",
+            "emoji": "🎵",
+            "image_url": "/assets/characters/venti-echo.png",
+            "personality": "诗意、自由、博学",
+            "catchphrase": "风会带来故事的种子，你的冒险如何？",
+            "voice_sample": "/assets/voices/venti-greeting.mp3"
+          },
+          "rating": 4.8,
+          "reviews_count": 23456,
+          "genres": ["开放世界", "角色扮演", "动作"],
+          "platforms": ["PC", "PS5", "iOS", "Android"],
+          "release_date": "2020-09-28",
+          "ai_recommendation": "风会带来故事的种子。这个开放世界充满了探索的乐趣，每个角落都藏着惊喜！"
+        },
+        {
+          "id": "honkai-star-rail",
+          "name": "Honkai: Star Rail",
+          "name_cn": "崩坏：星穹铁道",
+          "icon": "🚄",
+          "character": {
+            "name": "Stella",
+            "title": "列车长",
+            "emoji": "👩‍✈️",
+            "image_url": "/assets/characters/stella.png",
+            "personality": "冒险、温暖、引导者",
+            "catchphrase": "下一站，未知的星海！这段旅程的风景如何？",
+            "voice_sample": "/assets/voices/stella-greeting.mp3"
+          },
+          "rating": 4.6,
+          "reviews_count": 15678,
+          "genres": ["回合制", "角色扮演", "科幻"],
+          "platforms": ["PC", "iOS", "Android"],
+          "release_date": "2023-04-26",
+          "ai_recommendation": "下一站，未知的星海！登上星穹列车，开启你的宇宙冒险！"
+        }
+      ]
+    },
+    {
+      "id": "riot-games",
+      "name": "Riot Games",
+      "avatar": {
+        "character_name": "Riotus",
+        "title": "竞技裁判",
+        "emoji": "🔥",
+        "image_url": "/assets/characters/riotus.png"
+      },
+      "personality": {
+        "traits": ["激情", "公正", "竞技精神"],
+        "greeting": "竞技场见真章！展现你的实力吧！",
+        "tone": "热血、专业",
+        "keywords": ["竞技", "团队", "荣耀"]
+      },
+      "games": [
+        {
+          "id": "league-of-legends",
+          "name": "League of Legends",
+          "name_cn": "英雄联盟",
+          "icon": "⚔️",
+          "character": {
+            "name": "Rift Master",
+            "title": "峡谷解说",
+            "emoji": "🎙️",
+            "image_url": "/assets/characters/rift-master.png",
+            "personality": "解说、激情、专业分析",
+            "catchphrase": "这波五杀太炸裂了！MVP就是你！",
+            "voice_sample": "/assets/voices/rift-greeting.mp3"
+          },
+          "rating": 4.6,
+          "reviews_count": 34567,
+          "genres": ["MOBA", "策略", "竞技"],
+          "platforms": ["PC"],
+          "release_date": "2009-10-27",
+          "ai_recommendation": "MOBA经典之作！团队配合、精准操作，每一局都是新的挑战！"
+        },
+        {
+          "id": "valorant",
+          "name": "Valorant",
+          "name_cn": "无畏契约",
+          "icon": "🎯",
+          "character": {
+            "name": "Viper AI",
+            "title": "特工教官",
+            "emoji": "🕵️",
+            "image_url": "/assets/characters/viper-ai.png",
+            "personality": "战术、冷静、指挥官",
+            "catchphrase": "战术完美执行！这就是团队配合的力量。",
+            "voice_sample": "/assets/voices/viper-greeting.mp3"
+          },
+          "rating": 4.4,
+          "reviews_count": 19234,
+          "genres": ["FPS", "战术射击", "竞技"],
+          "platforms": ["PC"],
+          "release_date": "2020-06-02",
+          "ai_recommendation": "战术FPS的新标杆！精准枪法+技能策略，展现你的战术大师天赋！"
+        }
+      ]
+    }
+  ],
+  "review_types": [
+    {
+      "type": "text",
+      "name": "文字点评",
+      "icon": "📝",
+      "max_length": 5000,
+      "min_length": 10,
+      "supports_markdown": true,
+      "supports_emoji": true,
+      "auto_save_interval_seconds": 30
+    },
+    {
+      "type": "image",
+      "name": "图片点评",
+      "icon": "🖼️",
+      "max_count": 9,
+      "min_count": 1,
+      "allowed_formats": ["jpg", "jpeg", "png", "webp"],
+      "max_size_mb": 5,
+      "supports_annotation": true,
+      "auto_compress": true,
+      "target_quality": 85
+    },
+    {
+      "type": "voice",
+      "name": "语音点评",
+      "icon": "🎤",
+      "max_duration_seconds": 60,
+      "min_duration_seconds": 1,
+      "allowed_formats": ["mp3", "wav", "m4a", "ogg"],
+      "auto_transcribe": true,
+      "emotion_detection": true,
+      "sample_rate": 44100
+    },
+    {
+      "type": "gif",
+      "name": "GIF动图",
+      "icon": "🎞️",
+      "max_duration_seconds": 5,
+      "min_duration_seconds": 1,
+      "max_size_mb": 10,
+      "max_width": 800,
+      "max_height": 600,
+      "fps": 24
+    },
+    {
+      "type": "video",
+      "name": "短视频",
+      "icon": "📹",
+      "max_duration_seconds": 10,
+      "min_duration_seconds": 3,
+      "allowed_formats": ["mp4", "webm", "mov"],
+      "max_size_mb": 50,
+      "auto_compress": true,
+      "target_resolution": "720p",
+      "target_bitrate_kbps": 2000,
+      "auto_generate_thumbnail": true,
+      "auto_subtitle": true,
+      "highlight_detection": true
+    }
+  ],
+  "ai_response_config": {
+    "model": "gpt-4-turbo",
+    "temperature": 0.8,
+    "max_tokens": 300,
+    "response_delay_seconds": 30,
+    "templates": {
+      "positive": [
+        "{character_name}：{specific_praise}！{encouragement}",
+        "太棒了！{specific_praise}，{suggestion}",
+        "哇！{excitement}{specific_praise}。{follow_up}",
+        "{character_catchphrase}{specific_praise}！{recommendation}"
+      ],
+      "negative": [
+        "{character_name}：理解你的感受。{empathy}，{suggestion}",
+        "感谢真诚反馈！{acknowledgement}，期待你的后续体验",
+        "{empathy}{understanding}。{constructive_advice}",
+        "你的意见很重要！{validation}{improvement_suggestion}"
+      ],
+      "neutral": [
+        "{character_name}：感谢分享！{question}",
+        "有意思的观点！{follow_up}",
+        "{acknowledgement}{curiosity_question}",
+        "继续探索吧！{encouragement_suggestion}"
+      ]
+    },
+    "emotion_mapping": {
+      "positive_keywords": ["好玩", "精彩", "喜欢", "推荐", "完美", "棒", "赞", "爽", "满意"],
+      "negative_keywords": ["无聊", "差", "垃圾", "失望", "坑", "烂", "不好玩", "后悔"],
+      "neutral_keywords": ["一般", "还行", "凑合", "普通", "中规中矩"]
+    },
+    "rating_system": {
+      "grades": ["S", "A", "B", "C", "D", "F"],
+      "criteria": {
+        "S": "超出预期，内容极其精彩",
+        "A": "优秀，有深度和价值",
+        "B": "良好，有一定参考价值",
+        "C": "中等，基本表达了观点",
+        "D": "较差，缺乏细节",
+        "F": "低质量或违规内容"
+      },
+      "auto_rating_enabled": true
+    }
+  },
+  "interaction_features": {
+    "player_to_player": {
+      "actions": ["like", "comment", "share", "follow", "bookmark"],
+      "rating_tags": [
+        {"tag": "👍有用", "value": "helpful"},
+        {"tag": "😂搞笑", "value": "funny"},
+        {"tag": "💡专业", "value": "professional"},
+        {"tag": "🔥精彩", "value": "exciting"}
+      ],
+      "comment_max_length": 500,
+      "nested_comments_enabled": true,
+      "max_nested_level": 2
+    },
+    "ai_to_player": {
+      "auto_reply_enabled": true,
+      "auto_reply_delay_seconds": 30,
+      "rating_enabled": true,
+      "rating_system": ["S", "A", "B", "C", "D", "F"],
+      "triggers": [
+        "new_review",
+        "mention",
+        "high_quality_content",
+        "milestone_achievement"
+      ],
+      "voice_reply_enabled": true,
+      "voice_reply_tts_engine": "azure-neural-voice"
+    },
+    "player_to_ai": {
+      "modes": ["question", "challenge", "chat"],
+      "question_enabled": true,
+      "challenge_enabled": true,
+      "chat_history_limit": 50
+    }
+  },
+  "gamification": {
+    "achievements": [
+      {
+        "id": "first_review",
+        "name": "初次点评",
+        "description": "发布第一条点评",
+        "icon": "🌟",
+        "unlock_reward": "解锁AI角色专属对话",
+        "points": 10
+      },
+      {
+        "id": "video_master",
+        "name": "视频达人",
+        "description": "上传10个视频点评",
+        "requirement": {"type": "video_count", "value": 10},
+        "icon": "🎬",
+        "unlock_reward": "视频编辑滤镜包",
+        "points": 100
+      },
+      {
+        "id": "popular_reviewer",
+        "name": "人气点评家",
+        "description": "单条点评获得100赞",
+        "requirement": {"type": "single_review_likes", "value": 100},
+        "icon": "🔥",
+        "unlock_reward": "专属认证徽章",
+        "points": 200
+      },
+      {
+        "id": "social_butterfly",
+        "name": "社交达人",
+        "description": "关注50位玩家",
+        "requirement": {"type": "following_count", "value": 50},
+        "icon": "🦋",
+        "unlock_reward": "专属头像框",
+        "points": 150
+      },
+      {
+        "id": "helpful_critic",
+        "name": "乐于助人",
+        "description": "获得200个"有用"标签",
+        "requirement": {"type": "helpful_tags", "value": 200},
+        "icon": "👍",
+        "unlock_reward": "专家认证",
+        "points": 300
+      }
+    ],
+    "level_system": {
+      "levels": [
+        {"level": 1, "name": "新手", "min_points": 0, "max_points": 99},
+        {"level": 2, "name": "玩家", "min_points": 100, "max_points": 499},
+        {"level": 3, "name": "达人", "min_points": 500, "max_points": 1999},
+        {"level": 4, "name": "专家", "min_points": 2000, "max_points": 4999},
+        {"level": 5, "name": "传奇", "min_points": 5000, "max_points": 999999}
+      ],
+      "level_up_logic": "total_points = likes_received + comments_received * 2 + quality_score * 10",
+      "level_benefits": {
+        "1": ["基础点评功能"],
+        "2": ["解锁语音点评", "个性化主页"],
+        "3": ["解锁视频点评", "专属勋章"],
+        "4": ["优先推荐", "专家认证"],
+        "5": ["全功能解锁", "传奇徽章", "AI角色定制对话"]
+      }
+    },
+    "daily_missions": [
+      {
+        "id": "daily_login",
+        "name": "每日签到",
+        "description": "每天登录一次",
+        "points": 5,
+        "repeatable": true
+      },
+      {
+        "id": "daily_review",
+        "name": "每日点评",
+        "description": "发布一条点评",
+        "points": 20,
+        "repeatable": true
+      },
+      {
+        "id": "daily_interaction",
+        "name": "社交互动",
+        "description": "点赞或评论5条内容",
+        "points": 10,
+        "repeatable": true
+      }
+    ]
+  },
+  "ui_theme": {
+    "primary_color": "#6366f1",
+    "secondary_color": "#8b5cf6",
+    "accent_color": "#ec4899",
+    "success_color": "#22c55e",
+    "warning_color": "#f59e0b",
+    "error_color": "#ef4444",
+    "background_gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "card_background": "rgba(255, 255, 255, 0.95)",
+    "text_dark": "#1f2937",
+    "text_light": "#6b7280",
+    "border_radius": {
+      "small": "8px",
+      "medium": "12px",
+      "large": "20px",
+      "round": "50%"
+    },
+    "shadows": {
+      "small": "0 4px 15px rgba(0, 0, 0, 0.08)",
+      "medium": "0 10px 40px rgba(0, 0, 0, 0.15)",
+      "large": "0 20px 60px rgba(0, 0, 0, 0.25)"
+    },
+    "animations": {
+      "duration_fast": "0.2s",
+      "duration_normal": "0.3s",
+      "duration_slow": "0.5s",
+      "easing": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+    },
+    "responsive_breakpoints": {
+      "mobile": "640px",
+      "tablet": "768px",
+      "desktop": "1024px",
+      "wide": "1280px"
+    }
+  },
+  "api_endpoints": {
+    "base_url": "https://api.gameverse.com/v1",
+    "endpoints": {
+      "auth": {
+        "login": "/auth/login",
+        "register": "/auth/register",
+        "logout": "/auth/logout",
+        "refresh_token": "/auth/refresh"
+      },
+      "publishers": {
+        "list": "/publishers",
+        "detail": "/publishers/{publisher_id}",
+        "games": "/publishers/{publisher_id}/games"
+      },
+      "games": {
+        "list": "/games",
+        "detail": "/games/{game_id}",
+        "reviews": "/games/{game_id}/reviews",
+        "stats": "/games/{game_id}/stats"
+      },
+      "reviews": {
+        "create": "/reviews",
+        "detail": "/reviews/{review_id}",
+        "update": "/reviews/{review_id}",
+        "delete": "/reviews/{review_id}",
+        "like": "/reviews/{review_id}/like",
+        "comment": "/reviews/{review_id}/comments"
+      },
+      "ai": {
+        "reply": "/ai/reply",
+        "chat": "/ai/chat",
+        "analyze_content": "/ai/analyze"
+      },
+      "media": {
+        "upload_image": "/media/upload/image",
+        "upload_video": "/media/upload/video",
+        "upload_audio": "/media/upload/audio",
+        "transcribe_audio": "/media/transcribe"
+      },
+      "users": {
+        "profile": "/users/{user_id}",
+        "reviews": "/users/{user_id}/reviews",
+        "following": "/users/{user_id}/following",
+        "followers": "/users/{user_id}/followers",
+        "achievements": "/users/{user_id}/achievements"
+      },
+      "search": {
+        "games": "/search/games",
+        "reviews": "/search/reviews",
+        "users": "/search/users"
+      }
+    }
+  },
+  "content_moderation": {
+    "enabled": true,
+    "auto_moderation": true,
+    "ai_content_filter": {
+      "enabled": true,
+      "blocked_keywords": ["违规关键词1", "违规关键词2"],
+      "sensitivity_level": "medium"
+    },
+    "manual_review": {
+      "enabled": true,
+      "review_queue_threshold": 10,
+      "flagged_content_review_time_hours": 24
+    },
+    "user_reporting": {
+      "enabled": true,
+      "report_categories": [
+        "spam",
+        "inappropriate_content",
+        "harassment",
+        "copyright_violation",
+        "false_information"
+      ]
+    }
+  },
+  "analytics": {
+    "enabled": true,
+    "tracked_events": [
+      "page_view",
+      "review_publish",
+      "review_like",
+      "review_comment",
+      "ai_reply_received",
+      "achievement_unlocked",
+      "level_up"
+    ],
+    "user_behavior_tracking": true,
+    "heatmap_enabled": true
+  },
+  "notifications": {
+    "push_enabled": true,
+    "email_enabled": true,
+    "in_app_enabled": true,
+    "notification_types": {
+      "ai_reply": {
+        "enabled": true,
+        "priority": "high",
+        "template": "{character_name}回复了你的点评"
+      },
+      "new_comment": {
+        "enabled": true,
+        "priority": "medium",
+        "template": "{username}评论了你的点评"
+      },
+      "new_like": {
+        "enabled": true,
+        "priority": "low",
+        "template": "你的点评获得了{count}个赞"
+      },
+      "achievement_unlocked": {
+        "enabled": true,
+        "priority": "high",
+        "template": "恭喜！解锁成就：{achievement_name}"
+      },
+      "level_up": {
+        "enabled": true,
+        "priority": "high",
+        "template": "升级！你现在是{level_name}了"
+      }
+    }
+  },
+  "monetization": {
+    "subscription_plans": [
+      {
+        "id": "free",
+        "name": "免费版",
+        "price": 0,
+        "currency": "CNY",
+        "features": [
+          "基础点评功能",
+          "文字+图片点评",
+          "AI基础回复",
+          "社区互动"
+        ],
+        "limits": {
+          "daily_reviews": 5,
+          "video_duration_seconds": 0,
+          "storage_mb": 100
+        }
+      },
+      {
+        "id": "premium",
+        "name": "高级版",
+        "price": 19.9,
+        "currency": "CNY",
+        "billing_cycle": "monthly",
+        "features": [
+          "所有免费版功能",
+          "视频点评（最长30秒）",
+          "语音点评",
+          "AI深度对话",
+          "无限云存储",
+          "专属勋章",
+          "优先推荐",
+          "无广告"
+        ],
+        "limits": {
+          "daily_reviews": 999,
+          "video_duration_seconds": 30,
+          "storage_mb": 10240
+        }
+      },
+      {
+        "id": "annual",
+        "name": "年度会员",
+        "price": 199,
+        "currency": "CNY",
+        "billing_cycle": "yearly",
+        "features": [
+          "所有高级版功能",
+          "独家虚拟角色对话",
+          "定制化AI回复",
+          "年度专属徽章",
+          "优先客服支持"
+        ],
+        "discount_percentage": 16.8
+      }
+    ],
+    "virtual_items": [
+      {
+        "id": "character_skin_1",
+        "name": "虚拟角色皮肤包",
+        "price": 9.9,
+        "type": "cosmetic"
+      },
+      {
+        "id": "badge_premium",
+        "name": "高级徽章",
+        "price": 4.9,
+        "type": "badge"
+      }
+    ],
+    "ad_config": {
+      "free_tier_ads_enabled": true,
+      "ad_frequency": "每5条点评1次",
+      "ad_types": ["banner", "native"]
+    }
+  },
+  "technical_stack": {
+    "frontend": {
+      "framework": "React 18",
+      "language": "TypeScript",
+      "styling": "TailwindCSS",
+      "state_management": "Zustand",
+      "routing": "React Router v6",
+      "animation": "Framer Motion",
+      "3d_rendering": "Three.js",
+      "realtime": "WebRTC + Socket.io"
+    },
+    "backend": {
+      "runtime": "Node.js 20",
+      "framework": "Express.js",
+      "language": "TypeScript",
+      "api_style": "RESTful + GraphQL"
+    },
+    "database": {
+      "primary": "PostgreSQL 15",
+      "document": "MongoDB 7",
+      "cache": "Redis 7",
+      "search": "Elasticsearch 8"
+    },
+    "ai_services": {
+      "llm": "GPT-4 Turbo",
+      "speech_to_text": "Whisper API",
+      "text_to_speech": "Azure Neural Voice",
+      "image_recognition": "CLIP",
+      "video_analysis": "Custom CV Model",
+      "sentiment_analysis": "Custom Fine-tuned Model"
+    },
+    "infrastructure": {
+      "hosting": "AWS / Tencent Cloud",
+      "cdn": "CloudFront / Tencent CDN",
+      "container": "Docker + Kubernetes",
+      "ci_cd": "GitHub Actions",
+      "monitoring": "Prometheus + Grafana",
+      "logging": "ELK Stack"
+    },
+    "storage": {
+      "object_storage": "AWS S3 / Tencent COS",
+      "video_processing": "FFmpeg",
+      "image_processing": "Sharp"
+    }
+  },
+  "security": {
+    "authentication": "JWT + OAuth 2.0",
+    "password_hashing": "bcrypt",
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 60
+    },
+    "cors_enabled": true,
+    "https_only": true,
+    "content_security_policy": "strict"
+  },
+  "compliance": {
+    "gdpr_compliant": true,
+    "data_retention_days": 365,
+    "user_data_export_enabled": true,
+    "right_to_be_forgotten": true
+  }
+}

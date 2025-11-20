@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVerse - 游戏点评宇宙完整产品文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-primary);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+
+        /* 导航 */
+        .nav {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* 内容区块 */
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            scroll-margin-top: 100px;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+        }
+
+        .section h4 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.8rem;
+            color: var(--secondary);
+        }
+
+        /* 高亮块 */
+        .highlight {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight strong {
+            color: var(--primary);
+        }
+
+        /* 列表 */
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* 代码块 */
+        pre {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        code {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #a5d6ff;
+        }
+
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* 引用 */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            background: rgba(236, 72, 153, 0.1);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* 分隔线 */
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 3rem 0;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🎮 GameVerse</h1>
+            <div class="subtitle">游戏点评宇宙 - 完整产品文档</div>
+            <div class="tagline">AI驱动的沉浸式游戏点评社区</div>
+        </div>
+
+        <!-- 导航 -->
+        <div class="nav">
+            <h3>📑 文档导航</h3>
+            <div class="nav-links">
+                <a href="#part1" class="nav-link">PART 1 | 产品定位与价值</a>
+                <a href="#part2" class="nav-link">PART 2 | 用户画像与场景</a>
+                <a href="#part3" class="nav-link">PART 3 | 虚拟角色宇宙</a>
+                <a href="#part4" class="nav-link">PART 4 | AI点评系统</a>
+                <a href="#part5" class="nav-link">PART 5 | 核心功能详解</a>
+                <a href="#part6" class="nav-link">PART 6 | 信息架构</a>
+                <a href="#part8" class="nav-link">PART 8 | JSON配置</a>
+                <a href="#part9" class="nav-link">PART 9 | Pitch Deck</a>
+                <a href="#part10" class="nav-link">PART 10 | 演示场景</a>
+            </div>
+        </div>
+
+        <!-- PART 1 -->
+        <div id="part1" class="section">
+            <h2>【PART 1｜产品定位与价值说明】</h2>
+            
+            <h3>产品名称</h3>
+            <div class="highlight">
+                <strong>GameVerse（游戏点评宇宙）</strong><br>
+                AI驱动的沉浸式游戏点评社区
+            </div>
+
+            <h3>核心价值主张</h3>
+            <p>在AI时代,为C端玩家创造一个全新的游戏点评体验：</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-title">拟人化交互</div>
+                    <p>每个游戏都有专属虚拟角色陪你聊游戏,进行回复</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎬</div>
+                    <div class="card-title">多模态表达</div>
+                    <p>用户可以通过文字、图片、语音、GIF、短视频全方位展现游戏体验</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💫</div>
+                    <div class="card-title">情感共鸣</div>
+                    <p>AI角色理解你的情绪,给予个性化回应</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-title">社交破圈</div>
+                    <p>玩家间的互评机制,形成良性社区生态</p>
+                </div>
+            </div>
+
+            <h3>核心差异化</h3>
+            <ul>
+                <li><strong>虚拟角色陪伴</strong>：不再是冷冰冰的评分系统,而是有温度的角色对话</li>
+                <li><strong>多模态点评</strong>：突破纯文字限制,10秒短视频+GIF让体验可视化</li>
+                <li><strong>双向互评</strong>：AI角色点评你的内容,玩家之间也能互评</li>
+                <li><strong>厂商人格化</strong>：每个厂商都有独特人设,强化品牌认知</li>
+            </ul>
+        </div>
+
+        <!-- PART 2 -->
+        <div id="part2" class="section">
+            <h2>【PART 2｜用户画像与场景】</h2>
+            
+            <h3>主要用户画像</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>👨‍💻 用户A：硬核玩家</h4>
+                    <p><strong>年龄</strong>：25-35岁</p>
+                    <p><strong>特征</strong>：每周游戏时长20+小时,追求竞技/剧情深度</p>
+                    <p><strong>需求</strong>：深度点评、专业交流、炫技展示</p>
+                    <p><strong>场景</strong>：通关后录制精彩片段+语音解说,获得虚拟角色认可</p>
+                </div>
+                <div class="card">
+                    <h4>🎮 用户B：休闲玩家</h4>
+                    <p><strong>年龄</strong>：18-25岁</p>
+                    <p><strong>特征</strong>：碎片化游戏时间,注重社交和趣味</p>
+                    <p><strong>需求</strong>：快速分享、获得互动、发现新游戏</p>
+                    <p><strong>场景</strong>：拍游戏搞笑瞬间GIF,配简短吐槽,在评论区互动</p>
+                </div>
+                <div class="card">
+                    <h4>🔍 用户C：观望玩家</h4>
+                    <p><strong>年龄</strong>：20-30岁</p>
+                    <p><strong>特征</strong>：购买前谨慎,依赖真实玩家评价</p>
+                    <p><strong>需求</strong>：多维度了解游戏、看实机演示</p>
+                    <p><strong>场景</strong>：浏览多个玩家的视频点评,参考虚拟角色的推荐指数</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 3 -->
+        <div id="part3" class="section">
+            <h2>【PART 3｜虚拟角色宇宙】</h2>
+            
+            <h3>角色设计原则</h3>
+            <ul>
+                <li><strong>厂商人格化</strong>：每个厂商有独特形象和话语风格</li>
+                <li><strong>游戏代言人</strong>：每款游戏有专属角色,体现游戏调性</li>
+                <li><strong>AI对话能力</strong>：能理解玩家点评,给出情感化回应</li>
+                <li><strong>视觉一致性</strong>：2D/3D头像 + 动态表情</li>
+            </ul>
+
+            <h3>示例角色矩阵</h3>
+            
+            <h4>🎯 厂商1：Epic Games</h4>
+            <div class="highlight">
+                <p><strong>厂商虚拟角色</strong>：「史诗守护者」Epic</p>
+                <p><strong>形象</strong>：未来科技感骑士,紫金配色</p>
+                <p><strong>性格</strong>：冒险、大气、技术控</p>
+                <p><strong>口头禅</strong>："欢迎来到史诗世界！"</p>
+            </div>
+
+            <h4>🌸 厂商2：米哈游 miHoYo</h4>
+            <div class="highlight">
+                <p><strong>厂商虚拟角色</strong>：「旅行诗人」Paimon Plus</p>
+                <p><strong>形象</strong>：Q版幻想风,星空斗篷</p>
+                <p><strong>性格</strong>：二次元、温暖、博学</p>
+                <p><strong>口头禅</strong>："每个世界都有它的故事~"</p>
+            </div>
+
+            <h4>⚔️ 厂商3：Riot Games</h4>
+            <div class="highlight">
+                <p><strong>厂商虚拟角色</strong>：「竞技裁判」Riotus</p>
+                <p><strong>形象</strong>：电竞风裁判,红黑配色</p>
+                <p><strong>性格</strong>：激情、公正、竞技精神</p>
+                <p><strong>口头禅</strong>："竞技场见真章！"</p>
+            </div>
+        </div>
+
+        <!-- PART 4 -->
+        <div id="part4" class="section">
+            <h2>【PART 4｜AI点评系统】</h2>
+            
+            <h3>多模态点评能力</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <div class="card-title">1. 文字点评</div>
+                    <p><strong>输入</strong>：Markdown编辑器,支持表情、话题标签</p>
+                    <p><strong>AI处理</strong>：情感分析、关键词提取、相似内容推荐</p>
+                    <p><strong>反馈</strong>：文字回复 + 情绪表情</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖼️</div>
+                    <div class="card-title">2. 图片点评</div>
+                    <p><strong>输入</strong>：最多9张游戏截图,支持标注</p>
+                    <p><strong>AI处理</strong>：游戏场景识别、精彩瞬间标记</p>
+                    <p><strong>反馈</strong>："这个落日场景太美了！" + 点赞动画</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎤</div>
+                    <div class="card-title">3. 语音点评</div>
+                    <p><strong>输入</strong>：最长60秒语音录制</p>
+                    <p><strong>AI处理</strong>：语音转文字、情绪识别</p>
+                    <p><strong>反馈</strong>：语音回复(TTS) + 文字转录</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎞️</div>
+                    <div class="card-title">4. GIF点评</div>
+                    <p><strong>输入</strong>：上传或录制GIF(3-5秒循环)</p>
+                    <p><strong>AI处理</strong>：动作识别</p>
+                    <p><strong>反馈</strong>："这个反杀时机抓得太准！"</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📹</div>
+                    <div class="card-title">5. 短视频点评</div>
+                    <p><strong>输入</strong>：10秒内实录视频</p>
+                    <p><strong>AI处理</strong>：自动生成封面、识别精彩时刻、添加AI解说字幕</p>
+                    <p><strong>反馈</strong>：视频评级(S/A/B/C) + 具体点评</p>
+                </div>
+            </div>
+
+            <h3>互评机制</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>互评类型</th>
+                        <th>评价维度</th>
+                        <th>互动方式</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>玩家 → 玩家</td>
+                        <td>有用性、娱乐性、专业性</td>
+                        <td>点赞、评论、分享、关注</td>
+                    </tr>
+                    <tr>
+                        <td>AI角色 → 玩家</td>
+                        <td>自动点评,1分钟内响应</td>
+                        <td>S-F等级评分 + 具体建议</td>
+                    </tr>
+                    <tr>
+                        <td>玩家 → AI角色</td>
+                        <td>提问模式、挑战模式</td>
+                        <td>向AI问游戏玩法、PK点评质量</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PART 5 -->
+        <div id="part5" class="section">
+            <h2>【PART 5｜核心功能详细说明】</h2>
+            
+            <h3>功能1：厂商与游戏选择（首页）</h3>
+            <div class="highlight">
+                <strong>交互流程：</strong>
+                <ol>
+                    <li>进入首页,展示热门厂商卡片(含厂商虚拟角色头像)</li>
+                    <li>点击厂商卡片,展开该厂商旗下游戏列表</li>
+                    <li>每个游戏显示：游戏封面、专属虚拟角色头像、综合评分、最新点评数量</li>
+                </ol>
+            </div>
+
+            <h3>功能2：游戏点评详情页</h3>
+            <p>页面包含：游戏Banner + 虚拟角色悬浮、AI角色推荐语、发布点评按钮、点评列表(多模态卡片)</p>
+
+            <h3>功能3：多模态内容发布</h3>
+            <div class="highlight">
+                <strong>操作步骤：</strong>
+                <ol>
+                    <li>点击"发布点评",弹出创作面板</li>
+                    <li>选择内容类型：📝纯文字 / 🖼️图片组 / 🎤语音录制 / 🎞️GIF / 📹视频</li>
+                    <li>添加标签(自动推荐："战斗系统" "画面" "剧情")</li>
+                    <li>预览 → 发布</li>
+                </ol>
+            </div>
+
+            <h3>功能4：AI智能回复系统</h3>
+            <p><strong>触发条件</strong>：用户发布点评后30秒内、用户@虚拟角色名称、检测到高质量内容</p>
+            <pre><code>if (内容情绪 == "正面") {
+  回复 = 鼓励语 + 具体赞美 + 推荐相关内容
+} else if (内容情绪 == "负面") {
+  回复 = 理解共鸣 + 建议 + 邀请详细反馈
+} else {
+  回复 = 中性感谢 + 引导深入分享
+}</code></pre>
+
+            <h3>功能5：玩家互评系统</h3>
+            <p><strong>排序算法</strong>：热度 = 点赞数×1 + 评论数×2 + AI评级×10</p>
+            <p><strong>社交功能</strong>：关注玩家,接收TA的新点评通知、私信交流(需双方关注)</p>
+        </div>
+
+        <!-- PART 6 -->
+        <div id="part6" class="section">
+            <h2>【PART 6｜Web/H5信息结构】</h2>
+            
+            <h3>信息架构(IA)</h3>
+            <pre><code>GameVerse 游戏点评宇宙
+│
+├─ 1. 首页(厂商与游戏)
+│   ├─ 1.1 厂商列表
+│   ├─ 1.2 热门游戏瀑布流
+│   └─ 1.3 搜索与筛选
+│
+├─ 2. 游戏详情页
+│   ├─ 2.1 游戏信息区
+│   ├─ 2.2 点评列表
+│   └─ 2.3 发布入口
+│
+├─ 3. 内容创作页
+│   ├─ 3.1 内容类型选择
+│   ├─ 3.2 编辑器
+│   └─ 3.3 预览与发布
+│
+├─ 4. 个人中心
+│   ├─ 4.1 我的点评
+│   ├─ 4.2 收到的互评
+│   ├─ 4.3 关注的玩家
+│   └─ 4.4 成就勋章
+│
+└─ 5. 虚拟角色中心
+    ├─ 5.1 角色图鉴
+    ├─ 5.2 对话历史
+    └─ 5.3 角色故事</code></pre>
+        </div>
+
+        <!-- PART 8 -->
+        <div id="part8" class="section">
+            <h2>【PART 8｜完整JSON配置】</h2>
+            <p>供CodeBuddy自动化使用的完整配置数据,包含厂商信息、游戏数据、角色人设、点评类型、AI回复模板、互动功能、成就系统、UI主题、API接口等完整配置。</p>
+            <div class="highlight">
+                <p>📄 配置包含：</p>
+                <ul>
+                    <li>3个厂商(Epic Games、miHoYo、Riot Games)</li>
+                    <li>每个厂商2款代表游戏</li>
+                    <li>5种点评类型(文字、图片、语音、GIF、视频)</li>
+                    <li>AI回复策略与模板</li>
+                    <li>成就系统与等级设计</li>
+                    <li>完整UI主题配置</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PART 9 -->
+        <div id="part9" class="section">
+            <h2>【PART 9｜Pitch Deck文案】</h2>
+            
+            <h3>第2页：问题洞察</h3>
+            <div class="highlight">
+                <strong>传统游戏点评的三大痛点</strong>
+                <ol>
+                    <li>📊 <strong>冰冷的评分系统</strong>：五星评分无法传递真实情感</li>
+                    <li>📝 <strong>单一的文字表达</strong>：无法展现游戏动态体验</li>
+                    <li>🤖 <strong>缺乏互动反馈</strong>：发布后石沉大海,缺乏归属感</li>
+                </ol>
+            </div>
+            
+            <blockquote>
+                "我想让别人看到这个Boss战有多炸裂！"<br>
+                "为什么没人回应我的点评？"<br>
+                "纯文字根本说不清这游戏的爽快感！"
+            </blockquote>
+
+            <h3>第3页：解决方案</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🎭</div>
+                    <div class="card-title">虚拟角色陪伴</div>
+                    <p>每个游戏都有专属虚拟角色陪你聊,不再对着冷冰冰的评论框</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎬</div>
+                    <div class="card-title">多模态表达</div>
+                    <p>10秒短视频+GIF让体验可视化,真实还原游戏体验</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <div class="card-title">AI智能互动</div>
+                    <p>AI角色30秒内智能回复,理解你的情绪,给予个性化鼓励</p>
+                </div>
+            </div>
+
+            <h3>第6页：市场机会</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>平台</th>
+                        <th>优势</th>
+                        <th>劣势</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Steam评测</td>
+                        <td>用户基数大</td>
+                        <td>纯文字,无AI互动</td>
+                    </tr>
+                    <tr>
+                        <td>TapTap</td>
+                        <td>移动端友好</td>
+                        <td>缺乏多模态支持</td>
+                    </tr>
+                    <tr>
+                        <td>小红书游戏</td>
+                        <td>图文丰富</td>
+                        <td>无游戏垂直AI</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GameVerse</strong></td>
+                        <td><strong>AI角色+多模态</strong></td>
+                        <td>新产品需冷启动</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>第7页：商业模式</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">💎</div>
+                    <div class="card-title">会员订阅</div>
+                    <p>高级版$4.99/月：视频延长至30秒、解锁全部角色对话、专属勋章</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <div class="card-title">IP授权</div>
+                    <p>与游戏厂商联合推出限定角色皮肤、周边商品</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">数据服务</div>
+                    <p>向游戏厂商提供玩家情绪分析报告,帮助优化游戏设计</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 10 -->
+        <div id="part10" class="section">
+            <h2>【PART 10｜可执行Demo场景】</h2>
+            
+            <h3>演示流程(5分钟)</h3>
+            <div class="highlight">
+                <strong>场景：新玩家初次使用GameVerse</strong>
+                <ol>
+                    <li><strong>0:00-0:30</strong> 打开App,展示欢迎动画,三个厂商卡片依次浮现</li>
+                    <li><strong>0:30-1:00</strong> 点击"米哈游",展开《原神》和《星穹铁道》</li>
+                    <li><strong>1:00-2:00</strong> 浏览点评：图片点评、视频点评、GIF点评</li>
+                    <li><strong>2:00-3:30</strong> 发布点评：上传战斗视频,添加标签,输入文字</li>
+                    <li><strong>3:30-4:30</strong> AI互动：30秒后AI角色回复,评级A+</li>
+                    <li><strong>4:30-5:00</strong> 社区互动：收到评论,回复并关注玩家,查看成就</li>
+                </ol>
+            </div>
+
+            <h3>Demo技术要求</h3>
+            <ul>
+                <li>✅ 页面加载 &lt; 2秒</li>
+                <li>✅ 动画流畅度：60fps</li>
+                <li>✅ AI回复延迟 &lt; 30秒</li>
+                <li>✅ 多设备兼容：手机/平板/PC自适应</li>
+            </ul>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;">
+            <h2 style="color: white; border: none; padding: 0;">🎮 GameVerse</h2>
+            <p style="font-size: 1.2rem; margin-top: 1rem;">重新定义游戏点评体验</p>
+            <p style="margin-top: 1rem; opacity: 0.9;">📧 contact@gameverse.com | 🌐 www.gameverse.com</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">© 2024 GameVerse. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <script>
+        // 返回顶部按钮显示控制
+        window.addEventListener('scroll', () => {
+            const btn = document.querySelector('.back-to-top');
+            if (window.scrollY > 500) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
