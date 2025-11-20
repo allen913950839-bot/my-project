@@ -58,11 +58,11 @@ ${conversationContext}
 请以${characterName}的口吻回复(只返回回复内容，不要加"${characterName}:"等前缀):`;
 
     console.log('📤 Calling Gemini API...');
-    console.log('API URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY.substring(0, 10)}...`);
+    console.log('API URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY.substring(0, 10)}...`);
 
-    // 调用 Gemini API（使用 v1beta API 和 gemini-2.5-flash 模型）
+    // 调用 Gemini API（使用 gemini-2.0-flash 稳定模型）
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: {
@@ -78,7 +78,8 @@ ${conversationContext}
             temperature: 0.9,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 500,  // 增加到500，让回复更丰富
+            maxOutputTokens: 500,
+            candidateCount: 1,
           },
           safetySettings: [
             {
