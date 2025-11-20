@@ -20,12 +20,14 @@ export default async function handler(req, res) {
     console.log('API_KEY exists:', !!API_KEY);
     console.log('API_KEY length:', API_KEY ? API_KEY.length : 0);
     console.log('API_KEY preview:', API_KEY ? `${API_KEY.substring(0, 10)}...` : 'undefined');
+    console.log('所有环境变量:', Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('API')));
     
     if (!API_KEY) {
       console.error('❌ Gemini API Key not configured');
-      return res.status(500).json({ 
+      return res.status(200).json({ 
         error: 'API Key not configured',
         debug: 'Environment variable GEMINI_API_KEY is missing',
+        availableEnvKeys: Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('API')),
         useMock: true 
       });
     }
