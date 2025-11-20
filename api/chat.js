@@ -54,11 +54,11 @@ ${conversationContext}
 请以${characterName}的口吻回复(只返回回复内容，不要加"${characterName}:"等前缀):`;
 
     console.log('📤 Calling Gemini API...');
-    console.log('API URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY.substring(0, 10)}...`);
+    console.log('API URL:', `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY.substring(0, 10)}...`);
 
-    // 调用 Gemini API（注意：API Key 必须作为 URL 参数传递）
+    // 调用 Gemini API（使用 v1beta API 和 gemini-2.5-flash 模型）
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: {
