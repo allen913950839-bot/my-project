@@ -112,6 +112,12 @@ ${conversationContext}
 
     const data = await response.json();
     console.log('✅ Gemini API Success');
+    console.log('Response data:', JSON.stringify(data, null, 2));
+    console.log('candidates:', data.candidates);
+    console.log('First candidate:', data.candidates?.[0]);
+    console.log('Content:', data.candidates?.[0]?.content);
+    console.log('Parts:', data.candidates?.[0]?.content?.parts);
+    console.log('Text:', data.candidates?.[0]?.content?.parts?.[0]?.text);
 
     const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || '我现在有点累了，待会再聊...';
 
