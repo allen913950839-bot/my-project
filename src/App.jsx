@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Send, Sparkles, ChevronRight, Star, Share2, X, Mic, Zap } from 'lucide-react';
+import { MessageCircle, Send, Sparkles, ChevronRight, Star, Share2, X, Mic, Zap, Save, History, Globe } from 'lucide-react';
 import { getGeminiResponse } from './services/geminiService';
+import { saveConversation, copyShareLink, generateShareText } from './services/conversationService';
 
 // --- MOCK DATA ---
 const COMPANIES = [
@@ -54,7 +55,7 @@ const COMPANIES = [
 // --- COMPONENTS ---
 
 export default function GameSoulDemo() {
-  const [view, setView] = useState('landing'); // landing | chat | card
+  const [view, setView] = useState('landing'); // landing | chat | card | history | plaza
   const [selectedGame, setSelectedGame] = useState(null);
   const [chatHistory, setChatHistory] = useState([]);
   const [inputText, setInputText] = useState('');
@@ -65,6 +66,10 @@ export default function GameSoulDemo() {
   const [showWhip, setShowWhip] = useState(false);
   const [isExploding, setIsExploding] = useState(false);
   const [showCardButton, setShowCardButton] = useState(false); // 隐藏卡片按钮
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
   const messagesEndRef = useRef(null);
 
   const handleSelectGame = (game) => {
@@ -178,6 +183,52 @@ export default function GameSoulDemo() {
       mood: isPositive ? 'Happy' : 'Angry'
     });
     setView('card');
+  };
+
+  // 保存对话
+  const handleSaveConversation = async (isPublic = false) => {
+    if (chatHistory.length === 0) {
+      alert('对话为空，无法保存！');
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveSuccess(false);
+
+    try {
+      const result = await saveConversation({
+        characterName: selectedGame.character.name,
+        gameName: selectedGame.name,
+        chatHistory,
+        title: `与${selectedGame.character.name}的对话`,
+        isPublic
+      });
+
+      setShareUrl(result.shareUrl);
+      setSaveSuccess(true);
+      setShowSaveDialog(false);
+
+      // 3秒后隐藏成功提示
+      setTimeout(() => setSaveSuccess(false), 3000);
+
+      console.log('✅ 对话已保存:', result.conversationId);
+    } catch (error) {
+      console.error('保存失败:', error);
+      alert('保存失败，请稍后重试！');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // 分享对话
+  const handleShareConversation = async () => {
+    try {
+      const url = await copyShareLink(shareUrl.split('/').pop());
+      alert('分享链接已复制到剪贴板！\n' + url);
+    } catch (error) {
+      console.error('分享失败:', error);
+      alert('分享失败，请稍后重试！');
+    }
   };
 
   return (
@@ -329,6 +380,29 @@ export default function GameSoulDemo() {
                         ⚠️ 被抽了 {whipCount} 次 ({3 - whipCount} 次后爆炸)
                       </p>
                     )}
+                    
+                    {/* 功能按钮 */}
+                    <div className="flex items-center justify-center gap-2 mt-3">
+                      <button
+                        onClick={() => setShowSaveDialog(true)}
+                        disabled={chatHistory.length === 0}
+                        className="px-3 py-1.5 rounded-full bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-400 text-xs font-medium transition-colors flex items-center gap-1 disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        <Save size={12} /> 保存对话
+                      </button>
+                      <button
+                        onClick={() => setView('history')}
+                        className="px-3 py-1.5 rounded-full bg-purple-600/20 hover:bg-purple-600/40 text-purple-400 text-xs font-medium transition-colors flex items-center gap-1"
+                      >
+                        <History size={12} /> 历史记录
+                      </button>
+                      <button
+                        onClick={() => setView('plaza')}
+                        className="px-3 py-1.5 rounded-full bg-pink-600/20 hover:bg-pink-600/40 text-pink-400 text-xs font-medium transition-colors flex items-center gap-1"
+                      >
+                        <Globe size={12} /> 广场
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
