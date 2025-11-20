@@ -1,0 +1,16 @@
+# 敏感文件
+GameSoul游戏之魂/部署到Vercel-拖拽即可.html
+
+# 依赖目录
+node_modules/
+.DS_Store
+
+# 环境变量文件
+.env
+.env.local
+.env.*.local
+
+# 构建输出
+dist/
+build/
+*.log
